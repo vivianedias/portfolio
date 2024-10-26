@@ -20,15 +20,17 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Next.js Portfolio Starter",
-    template: "%s | Next.js Portfolio Starter",
+    default: "Viviane Dias",
+    template: "%s | Viviane Dias",
   },
-  description: "This is my portfolio.",
+  description:
+    "Hi! I'm Viviane Dias, a full-stack software engineer with over 5+ years of experience based in São Paulo, Brazil.",
   openGraph: {
-    title: "My Portfolio",
-    description: "This is my portfolio.",
+    title: "Viviane Dias | Portfolio",
+    description:
+      "Hi! I'm Viviane Dias, a full-stack software engineer with over 5+ years of experience based in São Paulo, Brazil.",
     url: baseUrl,
-    siteName: "My Portfolio",
+    siteName: "Viviane Dias's Portfolio",
     locale: "en_US",
     type: "website",
   },
@@ -53,18 +55,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="text-black bg-white dark:text-white dark:bg-black"
+      className="bg-teal-50 bg-gradient-to-b from-teal-50 to-violet-50 text-gray-900 dark:bg-gray-900 dark:bg-gradient-to-b dark:from-gray-950 dark:to-gray-900 dark:text-gray-200 light"
     >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-xl mx-4 mt-8 lg:mx-auto`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-dvh flex flex-col items-center`}
       >
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
-          <Header />
+        <Header />
+        <main className="flex flex-1 flex-col w-full md:max-w-3xl px-6">
           {children}
-          <Footer />
-          <Analytics />
-          <SpeedInsights />
         </main>
+        <Footer />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
