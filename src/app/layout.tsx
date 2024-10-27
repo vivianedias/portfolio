@@ -1,10 +1,10 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { baseUrl } from "./sitemap";
 import { Header, Footer } from "@/components";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import "./globals.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
