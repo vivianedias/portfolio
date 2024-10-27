@@ -1,10 +1,10 @@
 "use client";
 
 import "@theme-toggles/react/css/Within.css";
-import { useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { Within } from "@theme-toggles/react";
 
-export default function ToggleTheme() {
+export default function ToggleTheme(props: PropsWithChildren) {
   const [mode, setMode] = useState(true);
 
   useEffect(() => {
@@ -32,7 +32,9 @@ export default function ToggleTheme() {
       toggled={mode}
       onToggle={toggleTheme}
       placeholder={""}
-      duration={750}
+      onPointerEnterCapture={mode}
+      onPointerLeaveCapture={mode}
+      {...props}
     />
   );
 }

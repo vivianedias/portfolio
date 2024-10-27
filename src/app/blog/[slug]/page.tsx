@@ -1,4 +1,3 @@
-import { PropsWithChildren } from 'react'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { CustomMDX } from '@/components'
@@ -13,11 +12,11 @@ export async function generateStaticParams() {
   }))
 }
 
-type Props = {
-  params: { id: string, slug: string }
+interface PageProps {
+  params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
 
   const post = getBlogPosts().find((post) => post.slug === slug)
@@ -59,7 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function Blog({ params }: PropsWithChildren<Props>) {
+export default async function Blog({ params }: PageProps) {
   const { slug } = await params
   const post = getBlogPosts().find((post) => post.slug === slug)
 
