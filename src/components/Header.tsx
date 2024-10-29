@@ -5,15 +5,12 @@ const navItems = {
   "/": {
     name: "home",
   },
-  "/blog": {
-    name: "blog",
-  },
+  // "/blog": {
+  //   name: "blog",
+  // },
   // "/about": {
   //   name: "about",
   // },
-  "/links": {
-    name: "links",
-  },
 };
 
 export default function Navbar() {
