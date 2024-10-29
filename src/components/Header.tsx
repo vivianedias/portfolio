@@ -11,9 +11,9 @@ const navItems = {
   // "/about": {
   //   name: "about",
   // },
-  // "/links": {
-  //   name: "links",
-  // },
+  "/links": {
+    name: "links",
+  },
 };
 
 export default function Navbar() {
