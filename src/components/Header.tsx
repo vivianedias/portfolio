@@ -18,15 +18,15 @@ const navItems = {
 
 export default function Navbar() {
   return (
-    <header className="flex flex-row h-20 w-full md:h-40 md:max-w-3xl items-center justify-between px-6">
-      <nav className="flex flex-row justify-between w-full">
+    <header className="flex h-20 w-full flex-row items-center justify-between px-6 md:h-40 md:max-w-3xl">
+      <nav className="flex w-full flex-row justify-between">
         <div className="flex flex-row gap-4">
           {Object.entries(navItems).map(([path, { name }]) => {
             return (
               <Link
                 key={path}
                 href={path}
-                className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle"
+                className="flex align-middle transition-all hover:text-neutral-800 dark:hover:text-neutral-200"
               >
                 {name}
               </Link>
