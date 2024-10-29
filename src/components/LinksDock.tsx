@@ -51,7 +51,7 @@ const DATA = {
     },
     {
       name: "Resume",
-      url: "mailto:hi@vivianedias.dev",
+      url: "https://docs.google.com/document/d/e/2PACX-1vQdoR-VAK5kkppSbl8xJ849JiIdChbPj4cxjw__D3KDDKl6gLlw_uXaRuTW0jCAclH5pQImzReKkuih/pub",
       Icon: Icons.resume,
     },
   ],
