@@ -25,11 +25,11 @@ export const metadata: Metadata = {
     template: "%s | Viviane Dias",
   },
   description:
-    "Hi! I'm Viviane Dias, a full-stack software engineer with over 5+ years of experience based in São Paulo, Brazil.",
+    "Hi! I'm Viviane Dias, a senior frontend engineer with over 5+ years of experience based in São Paulo, Brazil.",
   openGraph: {
     title: "Viviane Dias | Portfolio",
     description:
-      "Hi! I'm Viviane Dias, a full-stack software engineer with over 5+ years of experience based in São Paulo, Brazil.",
+      "Hi! I'm Viviane Dias, a senior frontend engineer with over 5+ years of experience based in São Paulo, Brazil.",
     url: baseUrl,
     siteName: "Viviane Dias's Portfolio",
     locale: "en_US",
