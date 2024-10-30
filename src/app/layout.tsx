@@ -5,6 +5,7 @@ import { baseUrl } from "./sitemap";
 import { Header, Footer } from "@/components";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { cn } from "@/lib/style";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -53,15 +54,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className="bg-teal-50 bg-gradient-to-b from-teal-50 to-violet-50 text-gray-900 dark:bg-gray-900 dark:bg-gradient-to-b dark:from-gray-950 dark:to-gray-900 dark:text-gray-200 light"
-    >
+    <html lang="en" className="light">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-dvh flex flex-col items-center`}
+        className={cn(
+          geistSans.variable,
+          geistMono.variable,
+          "flex min-h-dvh flex-col items-center",
+          "bg-gradient-to-b from-teal-50 to-violet-50",
+          "dark:bg-gradient-to-b dark:from-gray-950 dark:to-gray-900",
+          "bg-teal-50dark:bg-gray-900",
+          "text-gray-900 antialiased dark:text-gray-200"
+        )}
       >
         <Header />
-        <main className="flex flex-1 flex-col w-full md:max-w-3xl px-6">
+        <main className="flex w-full flex-1 flex-col px-6 md:max-w-3xl">
           {children}
         </main>
         <Footer />
