@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { formatDate, getBlogPosts } from "@/lib/utils";
+import { NewspaperIcon } from "lucide-react";
 
 export default function BlogPosts() {
   const allBlogs = getBlogPosts();
 
   return (
     <div>
-      <h2 className="pb-4 text-2xl font-semibold">latest articles 🗒️</h2>
+      <h2 className="inline-flex items-center gap-x-2 pb-4 text-2xl font-semibold">
+        latest articles <NewspaperIcon className={"size-6"} />
+      </h2>
       {allBlogs
         .sort((a, b) => {
           if (

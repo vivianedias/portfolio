@@ -6,3 +6,4 @@ export { default as CustomMDX } from "./CustomMDX";
 export { default as Sparkle } from "./Sparkle";
 export { default as LinksDock } from "./LinksDock";
 export { default as Separator } from "./Separator";
+export { default as Projects } from "./Projects";
