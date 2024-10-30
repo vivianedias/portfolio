@@ -97,8 +97,8 @@ function generateDockIcon({
             href={url}
             aria-label={name}
             className={cn(
-              "inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-              "hover:bg-accent hover:text-accent-foreground",
+              "inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
+              "hover:bg-stone-50 hover:text-slate-900 dark:hover:bg-slate-900 dark:hover:text-slate-100",
               "h-9 w-9",
               "size-12 rounded-full"
             )}
