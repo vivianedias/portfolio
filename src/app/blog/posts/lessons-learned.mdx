@@ -1,0 +1,144 @@
+---
+title: 'Lessons learned from a developer hiring process that I didn't pass'
+publishedAt: '2021-02-21'
+summary: 'About a year ago I had to write a script to solve a defined problem in a hiring process, but failed to pass. Today I share some of the lessons learned from my journey since then that will help you don't make those same mistakes today.'
+image: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ft9wiaoe98jnnqijlyn8.jpeg
+---
+
+About a year ago I had to solve a challenge for a hiring process and I didn't pass. Time has gone by and I was curious about how I'd write this code today.
+
+**These do's and dont's are based on what I learned in the past year and understood as best practices for writing code.**
+
+But before anything, a little context. At the time that I did this interview, I was really into **functional programming** (and still am), but like anything you're learning for the first time, I had some misconceptions. For instance, believing that just because I isolated my concerns and all of the functions were decoupled I had _"mastered functional programming and clean code"_. 
+
+But I couldn't have been more wrong. Because while I did have some of those good practices in use, I broke other ***basic principles*** of Clean Code. While I knew the core concepts of functional programming, I didn't master the basics first - and I strongly believe that if I did **I would've passed that test**.
+
+## KISS
+
+Something that bothered me and made the process of understanding that script so much harder was the fact that I dealt with data **only** in arrays. For example:
+
+```js
+// Considering that every user was related to a book review
+const arr = [[user1, user1Review], [user2, user2Review]]
+```
+
+That led to this kind of code: 
+
+```js
+const getBestReview = users => {
+  const rating = users.map(user => [
+    ...[user[0], user[1].rating]
+  ])
+  const sortUsersByRating = rating.sort((a, b) => b[1] - a[1])
+  return sortUsersByRating[0][0]
+}
+```
+
+Now, don't get me wrong, this is not the end of the world but... what? I had to read this piece of code one or two times before I could understand it completely, and this is a major **no-no**. 
+
+I believe that **code should be as closely related to a narrative as possible**. That's what this particular piece of code violates. What's inside `user[1]`? I don't know. Only if I go back to the line where I call `getBestReview()` and pass `users` as a parameter, I'll have a better sense of it. **This is what we should avoid.** 
+
+![How to measure the quality of code - wtf's per minute](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/z68bc8eunj8fn0b5lhhm.png)
+
+By choosing to use arrays for _the sake of performance_ I violated another rule we definitely should always follow, **"Keep it simple, stupid!" (KISS)**. 
+
+This is a pretty straightforward line of thinking, so I won't spend too much time explaining what it means. But let's just say that I wouldn't be processing a lot of information to worry about this kind of thing at the moment. **Just stick to what you know you've got right now, and keep the code simple!**
+
+What would've solved this problem quite easily would be to use arrays of objects. Like so:
+
+```js
+const arr = [{user, review}, {user, review}]
+const getBestReview = users => {
+const sortUsersByRating = users.sort((a, b) => b.review.rating - a.review.rating)
+  return sortUsersByRating[0].user
+}
+```
+
+## Variable names
+
+Another thing that I noticed is that while the constant name is `getBestReview()` I didn't return the _best review_, but the user that had the highest rating review. That violates another good practice that is: **Name your variables, your functions, classes, etc, according to what value or operation they perform/keep**. 
+
+This is crucial for maintaining the other principle I introduced above, that _the code we write should assimilate as closely as possible to how we would sound like if we tried to tell other people what that particular piece of code does._ Therefore, **take your time to name your variables!**
+
+Another topic connected with readability is how we pass our function parameters. Take this code:
+
+```js
+calculateUserInfluence(
+  getReviewRating(review, getUser(stdin)),
+  getTypeOfReviews(stdin, ratings, goodRatings)
+)
+```
+
+The function `calculateUserInfluence()` actually has a good name on it, considering what it does, but let's focus on the parameters that we are passing. First, we pass `getReviewRating()`, and assuming that it does what it seems to do (something that we noticed we can't trust), we also pass another function, `getUser()` as a parameter inside `getReviewRating()`. 
+
+That made me pause for a moment, and go check what those functions return. Because of this moment where I went searching for extra meaning at four different places on the script, I already wasted some precious time. 
+
+This may appear small at this scale, but if we get used to this practice, the maintenance of a more complex system can become ***a difficult job***. 
+
+_But how can we solve it_? Easy! Store those `getReviewRating,getUser,getTypeOfReviews` inside variables with names that provide more context on what those functions return and how that relates to the parameter that `calculateUserInfluence` needs. Like so:
+
+```js
+const userFromInput = getUser(stdin)
+const reviewRating = getReviewRating(review, userFromInput)
+const reviewTypes = getTypeOfReviews(stdin, ratings, goodRatings)
+calculateUserInfluence(
+  reviewRating,
+  reviewTypes
+)
+```
+
+## Separate your concerns
+
+While I believed that because I used functions everywhere and passed almost everything through parameters I was writing code that followed the functional paradigm, I missed another important rule.
+
+I wrote every function that was used to process the input and give an output in the same `index.js` file. And this violates another good practice that is: **separate your concerns**. Next I'll try to demonstrate what that means:
+
+```js
+// index.js
+const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1)
+
+const getBestReview = users => {
+  const sortUsersByRating = users.sort((a, b) => b.review.rating - a.review.rating)
+  return capitalizeFirstLetter(sortUsersByRating[0].user.name)
+}
+```
+
+If the purpose of the challenge was to get the highest rating review from a list of users, I shouldn't include a **helper function** like `capitalizeFirstLetter()` inside the same file. 
+
+They should be separated so when reading the code for the first time, that helper method wouldn't pollute the readability of my script. 
+
+Separating concerns also helps in the understanding of your code, so the next developer that needs to work on a particular section of the business logic to add a new feature or even find a bug will have a much easier job while doing so.
+
+## Pro tip
+
+### Typescript
+
+This isn't a must, but a little sprinkle of salt on top of a sweet recipe. 
+
+Something that I also missed while reading the code was a bit more context about the function parameters. While this is a problem that could've been avoided by using JSDoc, I prefer using Typescript because it also serves as a static type checker. 
+
+So Typescript would solve two of our issues:
+- Documentation
+- Static type checking
+
+These advantages help us to improve our code maintainability and delivery confidence. In the long run, understanding every i/o in each method is much simpler with Typescript because it forces you to provide more context in each value that's being expected on those parameters, and what it returns.
+
+### Conclusion
+
+When I submitted the challenge I was pretty confident that I'd pass the test. I used:
+- Principles of functional programming
+- Wrote tests that covered the entire script 
+- Clean code (...)
+
+But my code lacked some very basic principles like:
+- KISS
+- Good variable names
+- Separate the business logic from other methods
+
+Studying the functional paradigm did give me a new perspective on writing code and nudged me in the right direction to improve my coding skills, considering that it forces you to be more aware of important things like:
+
+- Single responsibility principle
+- DRY (Don't repeat yourself)
+- TDD (Test-driven development)
+
+But I lacked some very basic ones that for sure demonstrated my lack of experience at the time. If there's one piece of advice that I'd like to send with this article is this: **Understand the importance of basic code principles, those will make you stand out more than saying that you apply fancy paradigms to your code**.

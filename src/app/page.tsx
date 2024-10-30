@@ -1,4 +1,4 @@
-import { Sparkle, LinksDock } from "@/components";
+import { Sparkle, LinksDock, BlogPosts } from "@/components";
 import Image from "next/image";
 
 export default function Page() {
@@ -41,9 +41,9 @@ export default function Page() {
         {`Here you'll find some of my latest tips & tricks to excell as a non-traditional developer, and projects I've been working on.`}
       </p>
 
-      {/* <div className="my-8">
+      <div className="my-8">
         <BlogPosts />
-      </div> */}
+      </div>
     </section>
   );
 }
