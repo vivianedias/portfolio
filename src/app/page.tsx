@@ -3,29 +3,26 @@ import Image from "next/image";
 
 export default function Page() {
   const yearsOfExperience = new Date().getFullYear() - 2019;
+
   return (
     <section>
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="inline-flex flex-col gap-2 text-6xl font-black">
+        <h1 className="inline-flex flex-col gap-2 text-4xl font-black sm:text-6xl">
           <span>
             Olá <span className="wave">👋🏾</span>
           </span>
           <span className="inline-flex gap-2">
             {`I'm`}
-            <Sparkle text="Viviane Dias" />
+            <Sparkle text={"Viviane Dias"} className={"text-4xl sm:text-6xl"} />
           </span>
         </h1>
-        <div
-          className={
-            "relative flex h-36 w-36 content-center items-center justify-center rounded-full bg-[#ffd500]"
-          }
-        >
+        <div className={"size-24 rounded-full bg-[#ffd500] sm:size-36"}>
           <Image
             src={"/profile.png"}
             alt={"Illustration of my done by my partner."}
             width={160}
             height={160}
-            style={{ width: "auto", height: "160px" }}
+            className={"m-auto h-28 w-auto sm:h-40"}
           />
         </div>
       </div>

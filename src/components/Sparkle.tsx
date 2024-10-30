@@ -3,6 +3,7 @@
 import { CSSProperties, ReactElement, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/style";
 
 interface Sparkle {
@@ -68,6 +69,10 @@ const SparklesText: React.FC<SparklesTextProps> = ({
   ...props
 }) => {
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
+  const [isLargerThanSm] = useMediaQuery(["(min-width: 640px)"], {
+    ssr: true,
+    fallback: [false], // return false on the server, and re-evaluate on the client side
+  });
 
   useEffect(() => {
     const generateStar = (): Sparkle => {
@@ -94,7 +99,7 @@ const SparklesText: React.FC<SparklesTextProps> = ({
           } else {
             return { ...star, lifespan: star.lifespan - 0.1 };
           }
-        }),
+        })
       );
     };
 
@@ -119,7 +124,7 @@ const SparklesText: React.FC<SparklesTextProps> = ({
         {sparkles.map((sparkle) => (
           <Sparkle key={sparkle.id} {...sparkle} />
         ))}
-        <strong>{text}</strong>
+        <strong>{isLargerThanSm ? text : text.split(" ")[0]}</strong>
       </span>
     </div>
   );
