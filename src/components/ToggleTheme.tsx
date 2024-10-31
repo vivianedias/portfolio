@@ -35,6 +35,7 @@ export default function ToggleTheme(props: PropsWithChildren) {
       onPointerEnterCapture={mode}
       onPointerLeaveCapture={mode}
       {...props}
+      className={"text-2xl text-[#7260fa] dark:text-[#ffd500]"}
     />
   );
 }
