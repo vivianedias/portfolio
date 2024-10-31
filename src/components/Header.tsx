@@ -23,7 +23,7 @@ export default function Navbar() {
               <Link
                 key={path}
                 href={path}
-                className="flex align-middle transition-all hover:text-neutral-800 dark:hover:text-neutral-200"
+                className="relative flex cursor-pointer p-2 align-middle transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-violet-600 after:opacity-0 after:transition-all after:duration-300 hover:text-violet-600 hover:after:opacity-100 dark:after:bg-violet-400 dark:hover:text-violet-400"
               >
                 {name}
               </Link>

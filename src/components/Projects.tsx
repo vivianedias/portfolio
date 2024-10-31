@@ -23,7 +23,7 @@ function Project({
 
   return (
     <motion.div
-      className="h-16 w-80 overflow-hidden rounded-lg border border-gray-300 bg-white shadow-sm focus-within:ring-1 focus-within:ring-violet-500 hover:border-violet-500"
+      className="h-16 w-full overflow-hidden rounded-lg border border-gray-300 bg-white shadow-sm focus-within:ring-1 focus-within:ring-violet-500 hover:border-violet-500 sm:w-80"
       initial={false}
       animate={{ height: isOpen ? "auto" : "60px" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -68,6 +68,8 @@ function Project({
             </p>
             <a
               href={link}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block rounded text-sm font-medium text-violet-500 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
               See more <SquareArrowOutUpRightIcon className={"inline size-3"} />

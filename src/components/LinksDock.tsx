@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { CalendarIcon, MailIcon, ScrollTextIcon } from "lucide-react";
 
 import { cn } from "@/lib/style";
@@ -93,9 +92,11 @@ function generateDockIcon({
     <DockIcon key={name}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Link
+          <a
             href={url}
             aria-label={name}
+            target="_blank"
+            rel="noopener noreferrer"
             className={cn(
               "inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
               "hover:bg-stone-50 hover:text-slate-900 dark:hover:bg-slate-900 dark:hover:text-slate-100",
@@ -104,7 +105,7 @@ function generateDockIcon({
             )}
           >
             <Icon className="size-5" />
-          </Link>
+          </a>
         </TooltipTrigger>
         <TooltipContent>
           <p>{name}</p>
