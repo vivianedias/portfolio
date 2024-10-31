@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { formatDate, getBlogPosts } from "@/lib/utils";
-import { NewspaperIcon } from "lucide-react";
 
 export default function BlogPosts() {
   const allBlogs = getBlogPosts();
@@ -8,7 +7,7 @@ export default function BlogPosts() {
   return (
     <div>
       <h2 className="inline-flex items-center gap-x-2 pb-4 text-2xl font-semibold">
-        latest articles <NewspaperIcon className={"size-6"} />
+        latest articles 📝
       </h2>
       {allBlogs
         .sort((a, b) => {
@@ -19,6 +18,7 @@ export default function BlogPosts() {
           }
           return 1;
         })
+        .slice(0, 5)
         .map((post) => (
           <Link
             key={post.slug}
