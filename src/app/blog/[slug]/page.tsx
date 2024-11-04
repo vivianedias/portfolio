@@ -13,11 +13,13 @@ export async function generateStaticParams() {
 }
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const { slug } = params;
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
 
   const post = getBlogPosts().find((post) => post.slug === slug);
   if (!post) {
