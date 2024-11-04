@@ -1,0 +1,69 @@
+---
+title: 'Make accessibility a default: Practical tips for every developer'
+publishedAt: '2024-11-04'
+summary: 'As software engineers, we should think about accessibility as a fundamental part of code quality. Here are some steps you can take to start building accessible applications without needing to be an accessibility expert from the get-go.'
+image: <img href="/a11y.webp" alt="Abstract illustration of web accessibility, featuring visual elements like an ear, eye, screen reader symbols, and webpage interface components, representing inclusive design for diverse user needs." />
+---
+
+In the tech industry, tests have become a universal standard to gauge code quality and stability. Yet, one thing rarely makes the list: **accessibility**.
+
+Accessibility is essential for ensuring that our software is usable by everyone, including users with disabilities or those navigating on different devices or in various environments. But because accessibility can seem complex and full of rules, many developers feel put off by it.
+
+This guide is here to change that. By taking a few practical steps, you can start incorporating accessibility into your work naturally and easily, making it a default part of your workflow—no deep expertise required. Let’s dive into a few essential tools and practices that will help you get started.
+
+---
+
+## 1. Unit testing with `testing-library`
+
+One of the most straightforward ways to start making accessible applications is to use `testing-library` for unit testing. This library not only enables you to test the usability and internal logic of components, but it also makes it easier to account for accessibility.
+
+In particular, `testing-library` encourages using the `*byRole` queries (e.g., `getByRole`) to select elements by their role. This practice mirrors how screen readers interact with content, helping ensure that your app is accessible to users relying on assistive technologies.
+
+Here are some resources for diving deeper:
+- <a href="https://testing-library.com/docs/dom-testing-library/api-accessibility/#testing-for-accessibility" target="_blank" rel="noopener noreferrer">Testing Library Documentation on Accessibility</a>
+- <a href="https://kentcdodds.com/blog/common-mistakes-with-react-testing-library" target="_blank" rel="noopener noreferrer">Kent C. Dodds’s Blog on Common Testing Mistakes</a>
+
+### Bonus tip: Install the `testing-library` ESLint plugin
+
+To help enforce best practices while writing tests, install the <a href="https://github.com/testing-library/eslint-plugin-testing-library" target="_blank" rel="noopener noreferrer">Testing Library ESLint Plugin</a>. This plugin will prompt you to follow accessibility guidelines, helping you anticipate common mistakes when writing tests with `testing-library`. It’s a handy way to ensure you’re following best practices for the library and, by extension, for accessibility.
+
+## 3. Automate accessibility testing with `cypress-axe`
+
+If you’re looking to test accessibility on a page level, try using <a href="https://www.npmjs.com/package/cypress-axe" target="_blank" rel="noopener noreferrer">cypress-axe</a>. This tool integrates with Cypress to provide end-to-end accessibility testing, flagging issues like contrast ratio problems or missing ARIA attributes in real-time.
+
+Its just one line of code:
+
+```js
+beforeEach(() => {
+  cy.visit('http://localhost:9000')
+  cy.injectAxe()
+})
+```
+
+`cypress-axe` helps automate accessibility tests across your app’s entire workflow, making it easy to catch potential issues at every stage.
+
+## 4. Be an ally alongside designers
+
+As developers, we’re often not the ones creating the initial UI designs, but we play an important role in maintaining and advocating for accessible choices. It’s common to encounter design specifications that don't meet contrast requirements or other accessibility standards. 
+
+Engage with designers early in the development process. Share accessibility concerns with them, and suggest tools like <a href="https://www.radix-ui.com/" target="_blank" rel="noopener noreferrer">Radix UI</a> for design systems with accessible color palettes. These conversations can lead to better overall design, helping make sure accessibility standards are met from the start.
+
+## 5. Accessibility Tools
+
+If you’re interested in going deeper into accessibility testing, there are several tools that can support you:
+- **Silktide**: An easy-to-use browser extension for manual, but effective accessibility checks.
+- **Lighthouse**: A free tool built into Chrome’s DevTools that provides a high-level overview of your app’s accessibility strengths and weaknesses.
+
+For a comprehensive list of accessibility tools, check out the <a href="https://www.w3.org/WAI/test-evaluate/tools/list/" target="_blank" rel="noopener noreferrer">W3C’s accessibility tools hub</a>, where you can find tools to help you at every stage of accessibility testing. 
+
+These resources provide insight into the areas where your application may fall short, helping you prioritize fixes in a practical way.
+
+---
+
+## Conclusion
+
+This is not an exhaustive list but rather a few tools I’ve adopted as a frontend engineer. They make it easier to “shift left” on accessibility, incorporating it earlier in development without requiring expert-level knowledge. 
+
+Accessibility is about inclusion—it’s a means of creating software that’s usable by as many people as possible. By implementing these practices, you can make accessibility a natural part of your workflow without needing deep expertise or complex tools. With every accessible component, test, and page, you’re contributing to a more inclusive digital world.
+
+Let’s aim for accessibility as the default, so that we’re not only building software but building it for everyone.
