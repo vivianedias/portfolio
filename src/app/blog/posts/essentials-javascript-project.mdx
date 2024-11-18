@@ -1,0 +1,254 @@
+---
+title: '8 essentials for every JavaScript project'
+publishedAt: '2024-11-18'
+summary: 'Boost your JavaScript project with these 8 must-have tools and practices. From Prettier to TypeScript, streamline your workflow, ensure code quality, and ship faster.'
+image: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ri1v6791k2y4leq2kudf.png
+---
+
+As a developer, especially if you’re new to a team, one of the fastest ways to add value is by introducing tools that improve the day-to-day workflow. These tools help maintain code quality, ensure consistency, and streamline the development process. Here’s a list of what I consider essentials for any JavaScript project:
+
+---
+
+## 1. Make code formatting consistent
+
+- **Tool:** <a href="https://prettier.io/" target="_blank" rel="noopener noreferrer">Prettier</a>  
+  Consistent code formatting reduces the "nitpicking" during code reviews and allows developers to focus on functionality. Prettier automatically formats your code based on defined rules.
+
+**Basic setup:**
+
+```bash
+npm install --save-dev prettier
+```
+
+Add a `.prettierrc` configuration file for your rules:
+
+```json
+{
+  "semi": true,
+  "singleQuote": false
+}
+```
+
+Add a formatting script in your `package.json`:
+
+```json
+"scripts": {
+  "format": "prettier --write ."
+}
+```
+
+---
+
+## 2. Enforce best practices
+
+- **Tool:** <a href="https://eslint.org" target="_blank" rel="noopener noreferrer">eslint</a> 
+	<br />
+  ESLint ensures your code adheres to best practices and project-specific conventions. With plugins, you can tailor it to your framework and project requirements.
+
+**Basic setup:**
+
+```bash
+npm install --save-dev eslint
+```
+
+Initialize ESLint:
+
+```bash
+npx eslint --init
+```
+
+Install framework-specific plugins (e.g., Next.js):
+
+```bash
+npm install --save-dev eslint-config-next
+```
+
+Create a `.eslintrc` file for configuration or use the wizard setup.
+
+---
+
+## 3. Quick feedback on your changes
+
+- **Tools:** <a href="https://typicode.github.io/husky/" target="_blank" rel="noopener noreferrer">Husky</a> + <a href="https://github.com/okonet/lint-staged" target="_blank" rel="noopener noreferrer">lint-staged</a>  
+  Run linting and tests before committing or pushing code. This ensures only high-quality code is pushed to the repository.
+
+**Setup:**
+
+Install Husky and lint-staged:
+
+```bash
+npm install --save-dev husky lint-staged
+```
+
+Enable Husky hooks:
+
+```bash
+npx husky install
+```
+
+Add pre-commit and pre-push hooks:
+
+```bash
+npx husky add .husky/pre-commit "npx lint-staged"
+npx husky add .husky/pre-push "npm run build"
+```
+
+Configure `lint-staged` in `package.json`:
+
+```json
+"lint-staged": {
+  "*.js": ["eslint --fix", "prettier --write", "jest --findRelatedTests"]
+}
+```
+
+---
+
+## 4. Pull-request static code analysis
+
+- **Tool:** <a target="_blank" rel="noopener noreferrer" href="https://sonarcloud.io/">SonarCloud</a>  
+  Automates the detection of code smells, vulnerabilities, and potential bugs. Great for identifying issues early.
+
+**Setup:**
+
+Integrate SonarCloud into your CI pipeline using their documentation.
+
+Add a `sonar-project.properties` file to configure the scanner.
+
+---
+
+## 5. Continuous integration (CI) pipeline
+
+- **Tools:** <a target="_blank" rel="noopener noreferrer" href="https://github.com/features/actions">GitHub Actions</a>, <a target="_blank" rel="noopener noreferrer" href="https://circleci.com/">CircleCI</a>, etc.  
+  Automate building and testing your code on every pull request.
+
+**Setup example with GitHub Actions:**
+
+Create a `.github/workflows/ci.yml` file:
+
+```yaml
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+		timeout-minutes: 5
+		strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Run build
+        run: npm run build
+
+      - name: Run unit tests
+        run: npm run test
+```
+
+---
+
+## 6. Continuous Deployment (CD) Pipeline
+
+- Deploy to staging and production automatically using tools like GitHub Actions or other CI/CD services. Testing in staging ensures environment variables and integrations work before going live.
+
+**Setup example for staging and production deployments:**
+
+Add a job to your CI pipeline to deploy after tests pass:
+
+```yaml
+deployment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        node-version: [20.x]
+    environment:
+      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    needs:
+      - integration
+    if: always() && needs.integration.result == 'success'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install serverless globally
+        run: npm install serverless@3.38.0 --global
+
+      - name: Serverless AWS authentication
+        run: sls config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Deploy API
+        run: serverless deploy --stage $STAGE
+```
+
+---
+
+## 7. End-to-End testing
+
+- **Tools:** <a target="_blank" rel="noopener noreferrer" href="https://www.cypress.io/">Cypress</a>, <a target="_blank" rel="noopener noreferrer" href="https://playwright.dev/">Playwright</a>  
+  E2E tests ensure your application works as expected in a browser.
+
+**Setup example with Cypress:**
+
+Install Cypress:
+
+```bash
+npm install --save-dev cypress
+```
+
+Add a test script in `package.json`:
+
+```json
+"scripts": {
+  "test:e2e": "cypress open"
+}
+```
+
+---
+
+## 8. Use TypeScript for type safety and documentation
+
+- **Tool:** <a target="_blank" rel="noopener noreferrer" href="https://www.typescriptlang.org/">TypeScript</a>  
+  TypeScript adds static typing to JavaScript, catching errors at compile time and improving code readability and maintainability.
+
+**Setup:**
+
+Install TypeScript:
+
+```bash
+npm install --save-dev typescript
+```
+
+Initialize a `tsconfig.json` file:
+
+```bash
+npx tsc --init
+```
+
+Update your scripts in `package.json`:
+
+```json
+"scripts": {
+  "build": "tsc"
+}
+```
+
+Refactor your `.js` files to `.ts` and start enjoying type safety!
+
+---
+
+Adding these tools will significantly boost your project's maintainability and help your team focus on what matters most: building great features.
